@@ -5,15 +5,16 @@ import time
 
 import requests
 from lxml import etree
-
+from requests.exceptions import ProxyError
 
 
 def getGoogleUrl(url,headers):
+    try:
         resp = requests.get(url, headers=headers)
         html_content = resp.content.decode("utf-8")
         html = etree.HTML(html_content)
         url_list = html.xpath("//*/@href")
-        f = open(r"D:\edusrc\sqlurl\bytedance.txt", "a")
+        f = open(r"C:\Users\Administrator\Desktop\2.txt", "a")
         try:
             a = 0
             for url in url_list:
@@ -25,19 +26,27 @@ def getGoogleUrl(url,headers):
                     continue
                 if "#" in url:
                     continue
+                if "tw" in url:
+                    continue
+                if "hk" in url:
+                    continue
+                if "facebook" in url:
+                    continue
                 if url == "":
                     break
                 f.write(url + "\n")
-                print(url+"成功存入！")
+                print(url + "成功存入！")
                 a = a + 1
             f.close()
         except(Exception):
             print("爬取失败！")
         return a
-
-
-
-
+    except ProxyError:
+        print("网络问题，连接失败，准备重新连接！")
+        x = 0
+        while x < 3:
+            getGoogleUrl(url, headers)
+            x += 1
 
 
 if __name__ == '__main__':
@@ -47,30 +56,29 @@ if __name__ == '__main__':
     search = ""
     str1 = '\"'
     type = ["php", "jsp", "asp", "aspx"]
-    parameter = ["id", "uid", "typeid", "u", "name", "page", "productid", "BigClassName", "searchkeywords", "keywords","type_id","orderby"]
-    content = ["今日头条", "抖音短视频", "抖音极速版", "抖音火山版", "西瓜视频", "飞书", "火山引擎", "抖音电商",
-               "番茄小说", "番茄畅听", "幸福里", "住小帮", "小荷医疗", "醒图", "头条搜索", "皮皮虾", "懂车帝",
-               "Faceu激萌", "轻颜相机", "剪映", "头条百科", "图虫", "大力智能"]
+    parameter = ["id", "uid", "typeid", "u", "name", "page", "productid", "BigClassName", "searchkeywords", "keywords","type_id","orderby",
+                 "type_id","bid","cid","eid","pid","fid","kid","mid","sid","classid","tid","key","kw","start","year","month",
+                 "sortid","sort","date","pageid","catid","itemid","num","no","cat_id","siteid","articleid","eventid","g","p","s"]
+    content = ["金融","保险","法律","委员会","监督会","机构","风采","院系设置","运营商","科技有限公司","通信","设备","银行","学术","科研","院校"]
 
-    # url = "https://www.google.com.hk/search?q=%22%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8inurl%3Aphp+id%22&hl=zh-cn&source=hp&ei=2-DsY5esLrHj2roPsvqIiAg&iflsig=AK50M_UAAAAAY-zu6wqUGqe5gGw0GFsAFysHlxlD_m2V&ved=0ahUKEwjXhcXQ05f9AhWxsVYBHTI9AoEQ4dUDCAg&uact=5&sclient=gws-wiz"
-    url = "https://www.google.com.hk/search?q="+ search +"22&hl=zh-cn&ei=OJDrY_boAa3n2roP7-OT6Ao&ved=0ahUKEwj25OvKkpX9AhWts1YBHe_xBK0Q4dUDCA8&uact=5&oq=%22%E5%90%8C%E6%B5%8E%E5%A4%A7%E5%AD%A6inurl%3Aphp+id%22&sclient=gws-wiz-serp&start="
-    # "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
+    url = "https://www.google.com.hk/search?q="+ search +"&hl=zh-cn&ei=ft8BZOjdJ8GfseMP59C8oA0&ved=0ahUKEwjolImk2b_9AhXBT2wGHWcoD9QQ4dUDCBA&uact=5&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQA0oECEEYAFAAWPH6TmDm_E5oBHAAeAGAAf8EiAGwJ5IBCjItMTIuMS4xLjKYAQCgAQHAAQE&sclient=gws-wiz-serp&start="
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36",
     }
-
     for i in content:
         for j in type:
             for k in parameter:
                 search = i + "inurl:" + j + " " + k
-                search = str1 + search + str1
+                #search = str1 + search + str1
                 print("此时的search",search)
-                for page in range(0,200,10):
-                    # print(url+str(i))
-                    a = getGoogleUrl(url+str(page),headers)
-                    print("第{}頁".format(page // 10))
-                    print("本页共有{}个数据url".format(a))
-                    time.sleep(3)
-                    if a == 0 :
-                        break
+                try:
+                    for page in range(0, 150, 10):
+                        a = getGoogleUrl(url + str(page), headers)
+                        print("第{}頁".format(page // 10))
+                        print("本页共有{}个数据url".format(a))
+                        time.sleep(3)
+                        if a == 0:
+                            continue
+                except Exception:
+                    continue
 

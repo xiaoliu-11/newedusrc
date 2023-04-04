@@ -35,11 +35,18 @@ def airPLS(X, lam, order, wep=0.05, p=0.05, itermax=20):
 
 
 if __name__ == '__main__':
-    x = [[1,2,3],[1,2,4]]
-    X = np.ndarray(shape=(2,3), dtype=int)
-    lam = 10^6
-    order =1
-    airPLS(X, lam, order, wep=0.05, p=0.05, itermax=20)
+    # 构造示例数据，shape为（10,100）
+    data = np.random.rand(10, 100)
+
+    # 调用函数去除基线漂移
+    Xc, Z = airPLS(data, 10 ** 6, 1)
+
+    # 输出去除基线漂移后的多元谱数据
+    print("去除基线漂移后的多元谱数据：\n", Xc)
+
+    # 输出基线漂移
+    print("基线漂移：\n", Z)
+
 
 
 
