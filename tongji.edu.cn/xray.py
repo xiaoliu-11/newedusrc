@@ -12,15 +12,16 @@ def loadUrl(fileName):
     for line in f:
         urlList.append(line.strip())
     f.close()
-    return urlList
+    ids = list(set(urlList))
+    return ids
 
 
 def insertxrayexe(urlList):
-    f = open(r"C:\Users\Administrator\Desktop\edux.txt", "a")
+    f = open(r"C:\Users\Administrator\Desktop\oppo1.txt", "a")
     a=0
     for line in urlList:
         # d: & cd D:\chromedownload\xray & .\xray_windows_amd64.exe webscan --url http://ishnc.sjtu.edu.cn/  --html-output D:\edusrc\xray\c.html
-        f.write(r"cd C:\chromedownload\xray & .\xray_windows_amd64.exe webscan --basic-crawler "+ line +r" --html-output C:\edusrc\xray\{}.html".format("42_"+str(a))+"\n")
+        f.write(r"cd D:\chromedownload\xray & .\xray_windows_amd64.exe webscan --basic-crawler "+ line +r" --html-output D:\edusrc\xray\{}.html".format("417_"+str(a))+"\n")
         a +=1
         print(a)
     f.close()
@@ -28,8 +29,10 @@ def insertxrayexe(urlList):
 
 
 
+
+
 if __name__ == '__main__':
-    exexray = r"C:\Users\Administrator\Desktop\edu.txt"
+    exexray = r"C:\Users\Administrator\Desktop\oppo.txt"
     urlList = loadUrl(exexray)
     insertxrayexe(urlList)
 

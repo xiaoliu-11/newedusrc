@@ -1,6 +1,4 @@
-# @author lsg
-# @date 2023/3/2
-# @file test.py
+
 import os
 import shutil
 
@@ -12,5 +10,5 @@ def get_path(file_path):
             shutil.rmtree(root)
 
 if __name__ == "__main__":
-    file_path = r"C:\Users\Administrator\Desktop\补天\云主机扫描的注入\3.25"
+    file_path = r"C:\Users\Administrator\Desktop\补天\云主机扫描的注入\4.18"
     get_path(file_path)

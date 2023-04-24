@@ -76,7 +76,7 @@ def bayes(data):
 
 if __name__ == '__main__':
     filename = r"C:\Users\Administrator\Desktop\os识别\321.txt"
-    fileexcel = r"C:\Users\Administrator\Desktop\dataos.xlsx"
+    #fileexcel = r"C:\Users\Administrator\Desktop\dataos.xlsx"
     urlList = loadUrl(filename)
     listos = []
     iplist = []

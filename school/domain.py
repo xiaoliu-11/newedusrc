@@ -19,7 +19,7 @@ def loadExecl(path):
 
 # 重复的消掉插入txt
 def inserturl(urlList):
-    f = open(r"C:\Users\Administrator\Desktop\360.txt", "a")
+    f = open(r"C:\Users\Administrator\Desktop\webank.txt", "a")
     a=0
     for line in urlList:
         f.write(line+"\n")
@@ -32,8 +32,7 @@ def inserturl(urlList):
 
 
 if __name__ == '__main__':
-    list1 = ["360.com.csv",
-                "360.cn.csv"]
+    list1 = ["webank.com.csv"]
     for i in list1:
         ids = loadExecl(i)
         print(ids)
